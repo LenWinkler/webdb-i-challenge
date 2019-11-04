@@ -28,7 +28,21 @@ router.get('/:id', (req, res) => {
       })
       .catch(err => {
           console.log('get account error', err)
+          res.status(500).json({ error: "Error getting account info" })
       })
 });
+
+router.post('/', (req, res) => {
+    knex
+      .insert(req.body, 'id')
+      .into('accounts')
+      .then(ids => {
+          res.status(201).json(ids)
+      })
+      .catch(err => {
+          console.log('post error', err);
+          res.status(500).json({ error: "Error adding account" })
+      })
+})
 
 module.exports = router;
