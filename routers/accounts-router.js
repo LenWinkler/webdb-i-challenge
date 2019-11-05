@@ -58,6 +58,19 @@ router.put('/:id', (req, res) => {
           console.log('update error', err);
           res.status(500).json({ error: "Unable to update account" })
       })
+});
+
+router.delete('/:id', (req, res) => {
+    knex('accounts')
+      .where({ id: req.params.id })
+      .del()
+      .then(count => {
+          res.status(200).json(count)
+      })
+      .catch(err => {
+          console.log('delete error', err);
+          res.status(500).json({ error: "Unable to delete account" })
+      })
 })
 
 module.exports = router;
