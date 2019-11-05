@@ -43,6 +43,21 @@ router.post('/', (req, res) => {
           console.log('post error', err);
           res.status(500).json({ error: "Error adding account" })
       })
+}),
+
+router.put('/:id', (req, res) => {
+    const changes = req.body;
+
+    knex('accounts')
+      .where({ id: req.params.id })
+      .update(changes)
+      .then(count => {
+          res.status(200).json(count)
+      })
+      .catch(err => {
+          console.log('update error', err);
+          res.status(500).json({ error: "Unable to update account" })
+      })
 })
 
 module.exports = router;
